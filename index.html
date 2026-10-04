@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="image.png">
+    <title>iTantra · Indian Multilingual TTS & STT Aided Neural Transceiver</title>
+    <!-- Bootstrap 5 + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts for formal typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f6f9fc;
+            color: #1e2b3c;
+            scroll-behavior: smooth;
+        }
+
+        /* formal, clean, institutional palette */
+        .bg-primary-soft {
+            background: linear-gradient(145deg, #f0f4fa 0%, #e6edf6 100%);
+        }
+
+        .navbar {
+            background-color: #0b1a2e !important;
+            border-bottom: 3px solid #2a6b9e;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            font-size: 1.6rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-brand span {
+            color: #79b8e8;
+            font-weight: 500;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8) !important;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #ffffff !important;
+        }
+
+        .section-title {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #0b1a2e;
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 4px;
+            background: #2a6b9e;
+            margin-top: 12px;
+            border-radius: 4px;
+        }
+
+        .section-sub {
+            color: #4a5f73;
+            font-size: 1.1rem;
+            font-weight: 400;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .card-clean {
+            background: #ffffff;
+            border: 1px solid #d9e2ec;
+            border-radius: 18px;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s ease;
+            height: 100%;
+        }
+
+        .card-clean:hover {
+            border-color: #b6cde0;
+            box-shadow: 0 12px 24px rgba(0, 40, 80, 0.06);
+        }
+
+        .icon-lg {
+            font-size: 2.2rem;
+            color: #2a6b9e;
+            line-height: 1;
+        }
+
+        .badge-formal {
+            background: #e2eaf3;
+            color: #1e3b5c;
+            font-weight: 600;
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+            border: 1px solid #cddae8;
+        }
+
+        .timeline-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .flow-step {
+            background: white;
+            border: 1px solid #d0deec;
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #1e3b5c;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .flow-step i {
+            color: #2a6b9e;
+            font-size: 1.1rem;
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #0b1a2e;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .feature-icon-box {
+            width: 54px;
+            height: 54px;
+            background: #e8f0f9;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e5a8a;
+            font-size: 1.8rem;
+            border: 1px solid #c9ddef;
+        }
+
+        .table-comparison th {
+            background-color: #eef3f9;
+            font-weight: 600;
+            color: #1a2f44;
+            border-bottom: 2px solid #cbd9e8;
+        }
+
+        .table-comparison td {
+            vertical-align: middle;
+            border-bottom: 1px solid #e2eaf2;
+            font-size: 0.95rem;
+        }
+
+        .table-comparison i.bi-check-circle-fill {
+            color: #1d7a4d;
+        }
+
+        .table-comparison i.bi-x-circle-fill {
+            color: #b13e3e;
+        }
+
+        .table-comparison i.bi-exclamation-triangle-fill {
+            color: #b87c1b;
+        }
+
+        .sos-demo {
+            background: #0b1a2e;
+            border-radius: 24px;
+            padding: 1.5rem 1rem;
+            color: white;
+        }
+
+        .sos-demo .phone-mock {
+            background: #0f1f32;
+            border-radius: 28px;
+            padding: 1.2rem 0.8rem;
+            border: 1px solid #2a4b6e;
+            box-shadow: 0 15px 25px -8px rgba(0,0,0,0.5);
+        }
+
+        .btn-emergency {
+            background: #c62828;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.7rem 1.4rem;
+            border-radius: 40px;
+            letter-spacing: 0.02em;
+            box-shadow: 0 6px 12px rgba(198, 40, 40, 0.25);
+            transition: all 0.15s;
+        }
+
+        .btn-emergency:hover {
+            background: #a51f1f;
+            color: white;
+        }
+
+        .btn-outline-aid {
+            border: 1.5px solid #2a6b9e;
+            color: #1e4b75;
+            font-weight: 600;
+            border-radius: 40px;
+            padding: 0.5rem 1.4rem;
+            background: transparent;
+        }
+
+        .btn-outline-aid:hover {
+            background: #e5eef9;
+            border-color: #1e4b75;
+        }
+
+        footer {
+            background: #0b1a2e;
+            color: #b0c5da;
+            border-top: 3px solid #2a6b9e;
+        }
+
+        .footer-link {
+            color: #b0c5da;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: #ffffff;
+        }
+
+        .divider-light {
+            border-top: 1px solid #d0deec;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="image.png" alt="iTantra Logo" style="height: 40px; width: auto;" class="me-2">
+            <span>i<span style="color:#79b8e8;">Tantra</span></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-2">
+                <li class="nav-item"><a class="nav-link" href="#solution">Solution</a></li>
+                <li class="nav-item"><a class="nav-link" href="#architecture">Architecture</a></li>
+                <li class="nav-item"><a class="nav-link" href="#impact">Impact</a></li>
+                <li class="nav-item"><a class="nav-link" href="#comparison">Comparison</a></li>
+                <li class="nav-item"><a class="nav-link" href="#ui">UI Preview</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO / TITLE -->
+<header class="bg-primary-soft py-5 mb-4">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                
+                <h1 class="display-4 fw-bold" style="color: #0b1a2e; letter-spacing: -0.03em;"><i class="bi bi-broadcast me-2"></i> iTantra</h1>
+                <p class="lead fs-4 fw-semibold" style="color: #1e4b75;">Indian Multilingual TTS & STT Aided Neural Transceiver Radio Access</p>
+                <p class="text-secondary mb-4" style="max-width: 650px;">Offline, lightweight Android communication system — speech to text, low‑bandwidth transmission, and on‑device TTS reconstruction. Built for disaster‑prone, remote, and low‑infrastructure areas.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <span class="badge-formal"><i class="bi bi-translate me-1"></i> 10+ Indian languages + English</span>
+                    <span class="badge-formal"><i class="bi bi-wifi-off me-1"></i> Fully offline</span>
+                    <span class="badge-formal"><i class="bi bi-bluetooth me-1"></i> Bluetooth / Wi‑Fi Direct</span>
+                </div>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                <div class="bg-white p-4 rounded-4 border" style="border-color: #d0deec;">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-mic-fill fs-1" style="color: #2a6b9e;"></i>
+                        <div class="text-start">
+                            <span class="fw-bold">Team Mnemonics</span><br>
+                            <span class="text-secondary small">Team ID: 125920</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- SOLUTION OVERVIEW -->
+<section id="solution" class="py-5">
+    <div class="container">
+        <h2 class="section-title">Our Solution</h2>
+        <p class="section-sub">An offline, multilingual and lightweight Android communication system that transforms spoken messages into lightweight text (STT), transmits them with minimal data over local Wi‑Fi/Bluetooth connections, and reconstructs them as clear speech on the receiving device using TTS.</p>
+
+        <!-- flow diagram -->
+        <div class="timeline-flow my-4">
+            <div class="flow-step"><i class="bi bi-mic"></i> Speech</div>
+            <i class="bi bi-arrow-right fs-5 text-secondary"></i>
+            <div class="flow-step"><i class="bi bi-file-text"></i> STT → Text</div>
+            <i class="bi bi-arrow-right fs-5 text-secondary"></i>
+            <div class="flow-step"><i class="bi bi-wifi"></i> Wi‑Fi / Bluetooth</div>
+            <i class="bi bi-arrow-right fs-5 text-secondary"></i>
+            <div class="flow-step"><i class="bi bi-volume-up"></i> TTS → Speech</div>
+        </div>
+
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="card-clean p-4">
+                    <div class="feature-icon-box mb-3"><i class="bi bi-megaphone"></i></div>
+                    <h5 class="fw-bold">Multiple‑Device Broadcasting</h5>
+                    <p class="text-secondary mb-0">Broadcast emergency alerts to all nearby iTantra devices simultaneously.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-clean p-4">
+                    <div class="feature-icon-box mb-3"><i class="bi bi-geo-alt"></i></div>
+                    <h5 class="fw-bold">Emergency Location Radar</h5>
+                    <p class="text-secondary mb-0">Displays direction, distance, and location of emergency devices using GPS.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-clean p-4">
+                    <div class="feature-icon-box mb-3"><i class="bi bi-exclamation-octagon"></i></div>
+                    <h5 class="fw-bold">Background SOS Alert</h5>
+                    <p class="text-secondary mb-0">Receive high‑priority SOS alerts without requiring the app to be actively open.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-clean p-4">
+                    <div class="feature-icon-box mb-3"><i class="bi bi-translate"></i></div>
+                    <h5 class="fw-bold">Translated Message</h5>
+                    <p class="text-secondary mb-0">Translate received messages into the user’s preferred language.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-clean p-4">
+                    <div class="feature-icon-box mb-3"><i class="bi bi-people"></i></div>
+                    <h5 class="fw-bold">Multilingual Support</h5>
+                    <p class="text-secondary mb-0">Offline STT/TTS support for 10 Indian languages + English.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-clean p-4">
+                    <div class="feature-icon-box mb-3"><i class="bi bi-diagram-3"></i></div>
+                    <h5 class="fw-bold">Multi‑Device Support</h5>
+                    <p class="text-secondary mb-0">Connect with multiple devices simultaneously and talk with any selected device.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TECHNICAL APPROACH / ARCHITECTURE -->
+<section id="architecture" class="py-5 bg-white">
+    <div class="container">
+        <h2 class="section-title">Technical Approach</h2>
+        <p class="section-sub">System architecture and technology stack — designed for low‑bandwidth, offline, and resource‑constrained environments.</p>
+
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <div class="card-clean p-4">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-diagram-2 me-2" style="color:#2a6b9e;"></i>System Architecture</h5>
+                    <div class="d-flex flex-column gap-3">
+                        <!-- sender -->
+                        <div class="p-3 rounded-3" style="background:#f2f7fd; border-left: 5px solid #2a6b9e;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold"><i class="bi bi-phone me-2"></i>Sender Device (Android)</span>
+                                <span class="badge bg-light text-dark border">Offline</span>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 mt-2 small">
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-mic me-1"></i>Speak</span>
+                                <i class="bi bi-arrow-right"></i>
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-file-text me-1"></i>STT → Text</span>
+                                <i class="bi bi-arrow-right"></i>
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-database me-1"></i>SQLite store</span>
+                                <i class="bi bi-arrow-right"></i>
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-send me-1"></i>Transmission</span>
+                            </div>
+                        </div>
+                        <!-- receiver -->
+                        <div class="p-3 rounded-3" style="background:#f2f7fd; border-left: 5px solid #1d7a4d;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold"><i class="bi bi-phone me-2"></i>Receiver Device (Android)</span>
+                                <span class="badge bg-light text-dark border">Offline</span>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 mt-2 small">
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-download me-1"></i>Received text</span>
+                                <i class="bi bi-arrow-right"></i>
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-translate me-1"></i>Translate</span>
+                                <i class="bi bi-arrow-right"></i>
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-volume-up me-1"></i>TTS</span>
+                                <i class="bi bi-arrow-right"></i>
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-ear me-1"></i>Hear</span>
+                            </div>
+                        </div>
+                        <!-- emergency broadcast -->
+                        <div class="p-3 rounded-3" style="background:#fef2f2; border-left: 5px solid #c62828;">
+                            <span class="fw-semibold"><i class="bi bi-exclamation-triangle me-2"></i>Emergency Broadcast (SOS)</span>
+                            <div class="d-flex flex-wrap gap-2 mt-2 small">
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-geo-alt me-1"></i>GPS</span>
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-broadcast me-1"></i>UDP broadcast</span>
+                                <span class="badge bg-white text-dark border px-3 py-2"><i class="bi bi-bell me-1"></i>Forced alarm + vibration</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card-clean p-4">
+                    <h5 class="fw-bold mb-4"><i class="bi bi-stack me-2" style="color:#2a6b9e;"></i>Technology Stack</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li class="d-flex gap-3 mb-3"><i class="bi bi-android2 fs-4" style="color:#2a6b9e;"></i><div><strong>Android SDK</strong><br><span class="text-secondary small">Kotlin, XML, Android SDK</span></div></li>
+                        <li class="d-flex gap-3 mb-3"><i class="bi bi-mic fs-4" style="color:#2a6b9e;"></i><div><strong>Audio Processing</strong><br><span class="text-secondary small">Android AudioRecord, VAD</span></div></li>
+                        <li class="d-flex gap-3 mb-3"><i class="bi bi-file-text fs-4" style="color:#2a6b9e;"></i><div><strong>STT</strong><br><span class="text-secondary small">Lightweight Whisper Small (INT4) via whisper.cpp</span></div></li>
+                        <li class="d-flex gap-3 mb-3"><i class="bi bi-volume-up fs-4" style="color:#2a6b9e;"></i><div><strong>TTS & Translate</strong><br><span class="text-secondary small">Android TTS (OfflineTtsEngine), Google ML Kit translation</span></div></li>
+                        <li class="d-flex gap-3 mb-3"><i class="bi bi-wifi fs-4" style="color:#2a6b9e;"></i><div><strong>Communication</strong><br><span class="text-secondary small">Bluetooth, Wi‑Fi Direct, Local Wi‑Fi, low‑bandwidth radio</span></div></li>
+                        <li class="d-flex gap-3"><i class="bi bi-database fs-4" style="color:#2a6b9e;"></i><div><strong>Database</strong><br><span class="text-secondary small">SQLite</span></div></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- stats -->
+        <div class="row g-4 mt-4 text-center">
+            <div class="col-md-3">
+                <div class="stat-number">10+</div>
+                <span class="text-secondary fw-medium">Indian languages</span>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-number">100%</div>
+                <span class="text-secondary fw-medium">Offline operation</span>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-number">1/10</div>
+                <span class="text-secondary fw-medium">Bandwidth vs raw audio</span>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-number">0</div>
+                <span class="text-secondary fw-medium">Cloud dependency</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEASIBILITY & VIABILITY + IMPACT -->
+<section id="impact" class="py-5" style="background:#f6f9fc;">
+    <div class="container">
+        <h2 class="section-title">Feasibility & Viability</h2>
+        <p class="section-sub">Built for real‑world impact — technically sound, operationally practical, and economically scalable.</p>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="card-clean p-4 h-100">
+                    <i class="bi bi-cpu icon-lg mb-3"></i>
+                    <h6 class="fw-bold">Technical</h6>
+                    <ul class="text-secondary small ps-3 mb-0">
+                        <li>Lightweight on‑device STT/TTS models</li>
+                        <li>Only text data transmitted — no large audio files</li>
+                        <li>Works on low/mid‑range smartphones</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card-clean p-4 h-100">
+                    <i class="bi bi-gear icon-lg mb-3"></i>
+                    <h6 class="fw-bold">Operational</h6>
+                    <ul class="text-secondary small ps-3 mb-0">
+                        <li>Push‑to‑Talk or automatic voice mode</li>
+                        <li>Dedicated emergency mode for rapid alerts</li>
+                        <li>Simple, intuitive UI for all users</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card-clean p-4 h-100">
+                    <i class="bi bi-currency-rupee icon-lg mb-3"></i>
+                    <h6 class="fw-bold">Economic</h6>
+                    <ul class="text-secondary small ps-3 mb-0">
+                        <li>No mandatory cloud server or internet</li>
+                        <li>Uses existing Android smartphones</li>
+                        <li>Reduces deployment cost & complexity</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card-clean p-4 h-100">
+                    <i class="bi bi-bar-chart icon-lg mb-3"></i>
+                    <h6 class="fw-bold">Viability</h6>
+                    <ul class="text-secondary small ps-3 mb-0">
+                        <li>Scalable to disaster management, rural communication, field teams</li>
+                        <li>Multi‑device communication</li>
+                        <li>Long‑term resilient infrastructure</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- key impact areas -->
+        <div class="row mt-5 g-4">
+            <div class="col-md-3">
+                <div class="card-clean p-4 text-center h-100">
+                    <i class="bi bi-people-fill icon-lg mb-2"></i>
+                    <h6 class="fw-bold">Social Impact</h6>
+                    <p class="small text-secondary mb-0">Rapid SOS, works in no‑internet zones, extends message reach beyond device range.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-clean p-4 text-center h-100">
+                    <i class="bi bi-tree-fill icon-lg mb-2"></i>
+                    <h6 class="fw-bold">Environmental</h6>
+                    <p class="small text-secondary mb-0">Transmits lightweight text, uses existing smartphones, supports remote areas.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-clean p-4 text-center h-100">
+                    <i class="bi bi-cash-coin icon-lg mb-2"></i>
+                    <h6 class="fw-bold">Economic</h6>
+                    <p class="small text-secondary mb-0">Low infrastructure cost, works on low/mid‑range devices, reduces network dependency.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-clean p-4 text-center h-100">
+                    <i class="bi bi-shield-fill icon-lg mb-2"></i>
+                    <h6 class="fw-bold">Strategic</h6>
+                    <p class="small text-secondary mb-0">Strengthens disaster response, defense communication, and government/NGO operations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section id="comparison" class="py-5 bg-white">
+    <div class="container">
+        <h2 class="section-title">Our Solution vs Existing Solutions</h2>
+        <p class="section-sub">A clear feature comparison — iTantra offers offline STT/TTS, emergency broadcast, and multi‑device support where others fall short.</p>
+
+        <div class="table-responsive card-clean p-3">
+            <table class="table table-comparison align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th style="min-width: 160px;">Feature</th>
+                        <th class="text-center">iTantra</th>
+                        <th class="text-center">BlueChat</th>
+                        <th class="text-center">Meshtastic</th>
+                        <th class="text-center">Bridgefy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-semibold">Voice STT/TTS</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Yes — offline 10+ Indian languages + English</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> only voice notes exist</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No built‑in voice STT/TTS</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No STT & TTS</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Communication</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Voice (walkie‑talkie)</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Text + voice notes</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Text messaging</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Text + voice notes</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Emergency Alert</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Yes — all nearby iTantra devices</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No</td>
+                        <td class="text-center"><i class="bi bi-exclamation-triangle-fill"></i> Available in Bridgefy Link (not clear)</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Translation</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Yes</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Voice Activity Detection</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Yes</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No</td>
+                        <td class="text-center"><i class="bi bi-x-circle-fill"></i> No</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Encryption</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> AES + ACK delivery confirmation</td>
+                        <td class="text-center"><i class="bi bi-exclamation-triangle-fill"></i> Not advertised</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Yes, AES‑256</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Encrypted</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">Multi‑Device</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Multi‑devices support</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Channels / group</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Yes</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Group/public communication</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-semibold">History</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Saved with transcripts</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Basic chat log</td>
+                        <td class="text-center"><i class="bi bi-check-circle-fill"></i> Message log only</td>
+                        <td class="text-center"><i class="bi bi-exclamation-triangle-fill"></i> Basic history — verify implementation</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- UI PREVIEW & SOS DEMO -->
+<section id="ui" class="py-5" style="background:#f6f9fc;">
+    <div class="container">
+        <h2 class="section-title">Application Interface Preview</h2>
+        <p class="section-sub">Clean, high‑contrast UI designed for field use — one‑touch emergency broadcast, language selection, and real‑time device discovery.</p>
+
+        <div class="row g-5 align-items-center">
+    <!-- left mock: ss1.jpg -->
+            <div class="col-lg-4">
+                <div class="card-clean p-3 text-center">
+                    <img src="ss1.jpg" 
+                        alt="iTantra Home Screen - Connection & Language Selection" 
+                        class="img-fluid rounded-3"
+                        style="width: 100%; height: auto; display: block; box-shadow: 0 6px 16px rgba(0,0,0,0.06);">
+                    <p class="small text-secondary mt-3 mb-0">
+                        <i class="bi bi-phone me-1"></i>Home — Device pairing, language selection & Push-to-Talk
+                    </p>
+                </div>
+            </div>
+
+    <!-- center mock: ss2.jpg -->
+    <div class="col-lg-4">
+        <div class="card-clean p-3 text-center" style="border-top: 4px solid #c62828;">
+            <img src="ss2.jpg" 
+                 alt="iTantra Emergency Broadcast Screen" 
+                 class="img-fluid rounded-3"
+                 style="width: 100%; height: auto; display: block; box-shadow: 0 6px 16px rgba(0,0,0,0.06);">
+            <p class="small text-secondary mt-3 mb-0">
+                <i class="bi bi-megaphone me-1 text-danger"></i>Emergency — One-touch broadcast to all connected devices
+            </p>
+        </div>
+    </div>
+
+    <!-- right mock: ss3.jpg -->
+    <div class="col-lg-4">
+        <div class="card-clean p-3 text-center" style="border-top: 4px solid #c62828;">
+            <img src="ss3.jpg" 
+                 alt="iTantra SOS Alert with GPS Radar" 
+                 class="img-fluid rounded-3"
+                 style="width: 100%; height: auto; display: block; box-shadow: 0 6px 16px rgba(0,0,0,0.06);">
+            <p class="small text-secondary mt-3 mb-0">
+                <i class="bi bi-geo-alt me-1 text-danger"></i>Alert — GPS radar, distance & one-tap acknowledge
+            </p>
+        </div>
+    </div>
+</div>
+    </div>
+</section>
+
+<!-- KEY BENEFITS / TARGET AUDIENCE (short) -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <h4 class="fw-bold mb-3"><i class="bi bi-star-fill me-2" style="color:#2a6b9e;"></i>Key Benefits</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Multiple Indian languages — inclusive for non‑literate users</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Lightweight text instead of raw audio — minimal bandwidth</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Works on existing Android smartphones — no extra hardware</li>
+                    <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Helps rescue teams and emergency responders</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h4 class="fw-bold mb-3"><i class="bi bi-people-fill me-2" style="color:#2a6b9e;"></i>Target Audience</h4>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge-formal">Disaster Response Teams</span>
+                    <span class="badge-formal">Emergency Services</span>
+                    <span class="badge-formal">NGOs</span>
+                    <span class="badge-formal">Government Agencies</span>
+                    <span class="badge-formal">Defense & Rescue</span>
+                    <span class="badge-formal">Low‑connectivity organizations</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-4 mt-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <span class="fw-bold text-white">iTantra</span> <span class="text-secondary">| Smart India Hackathon 2026</span><br>
+                <span class="small">Problem Statement ID: SIH26173 · Team Mnemonics (125920)</span>
+            </div>
+            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                <a href="#" class="footer-link me-3"><i class="bi bi-github"></i></a>
+                <a href="#" class="footer-link me-3"><i class="bi bi-globe"></i></a>
+                <a href="#" class="footer-link"><i class="bi bi-envelope"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS (for toggler) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Smooth scroll for anchor links -->
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+</body>
+</html>
